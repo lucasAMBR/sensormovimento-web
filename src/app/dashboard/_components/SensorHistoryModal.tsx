@@ -49,6 +49,7 @@ const SensorHistoryModal = ({ sensorId, closeModal }: SensorHistoryProps) => {
                 <h3 className="text-xl font-semibold flex gap-4 items-center"><div onClick={closeModal} className="bg-blue-700 p-1 rounded-full cursor-pointer"><ChevronLeft /></div> Historico de ativações</h3>
                 <p className="text-xs mt-4 mb-2">Listando da ativação mais recente para a mais antiga</p>
                 <div className="max-h-[600px] overflow-auto flex flex-col">
+                    {historyList.length < 1 && <p className="my-4">Parece que ele ainda não registrou nada</p>}
                     {historyList.map((item) => (
                         <div className="w-[400px] mb-2 bg-neutral-900 p-3 rounded-xl">
                             Horario da Ativação: {formatDate(item.timestamp)}

@@ -26,7 +26,7 @@ const SensorCard = ({id, name, description, createdAt}: SensorCardProps) => {
     const formattedDate = new Intl.DateTimeFormat('pt-BR', optionsFull).format(dateObject);
 
     return(
-        <div className="bg-gray-300 dark:bg-neutral-800 p-4 w-[300px] rounded-xl flex flex-col gap-2">
+        <div className="bg-gray-300 dark:bg-neutral-800 p-4 w-[300px] rounded-xl flex flex-col justify-around gap-2">
             <p className="text-2xl font-semibold">{id}. {name}</p>
             <p>{description}</p>
             <p className="text-xs">Criado em: {formattedDate}</p>

@@ -65,6 +65,34 @@ export default function Home() {
     }
   }
 
+  const handleRegisterSubmit = async(e: any) => {
+    e.preventDefault()
+    try{
+      const register = await api.post('/auth/register', {
+        name: nameInputValue,
+        email: emailInputValue,
+        password: passwordInputValue
+      })
+
+      notyf.success(register.data.message);
+
+      const response = await api.post('/auth/login', {
+        email: emailInputValue,
+        password: passwordInputValue
+      })
+
+      login({token: response.data.data.token, user: response.data.data.userData})
+
+      router.push("/dashboard");
+
+      login({token: response.data.data.token, user: response.data.data.userData})
+
+      router.push("/dashboard");
+    }catch (error: any){
+      notyf.error(error.message);
+    }
+  }
+
   //UTILITARIOS
   const clearInputsOnSwitch = () => {
     setNameInputValue("");
@@ -90,7 +118,7 @@ export default function Home() {
             <p className="text-xs text-center my-2">Não tem uma conta? <span className="underline text-blue-700 cursor-pointer hover:text-blue-950" onClick={switchFormSection}>Registre-se</span></p>
           </form>
         ) : (
-          <form>
+          <form onSubmit={handleRegisterSubmit}>
             <div className="flex flex-col my-4">
               <label className="text-blue-900 dark:text-white">Nome</label>
               <input className="border-1 pl-2 border-blue-900 dark:border-0 w-[400px] h-12 bg-white rounded-md text-black" value={nameInputValue} onChange={handleNameInputValueChange}/>
@@ -104,7 +132,7 @@ export default function Home() {
               <input className="border-1 pl-2 border-blue-900 dark:border-0 w-[400px] h-12 bg-white rounded-md text-black" value={passwordInputValue} onChange={handlePasswordInputValueChange} type='password'/>
             </div>
             <button className="w-[400px] bg-blue-700 h-12 rounded-md text-white mt-6 cursor-pointer hover:bg-blue-900" onClick={() => notyf.success("Deu certo")}>Registrar-se</button>
-            <p className="text-xs text-center my-2">Já tem uma conta? <span className="underline text-blue-700 cursor-pointer hover:text-blue-950" onClick={switchFormSection}>Entre aqui</span></p>
+            <p className="text-xs text-center my-2">Já tem uma conta? <span className="underline text-blue-700 cursor-pointer hover:text-blue-950">Entre aqui</span></p>
           </form>
         )}
       </div>
